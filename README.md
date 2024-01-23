@@ -18,4 +18,4 @@ There are template themes available to create one using Jeckyll etc. However, if
 
 ## Self-Refreshing and Training
 
-Although I am familiar with most of the concepts shared here, I decided to challenge myself to take this,([ossu bioinformatics](https://github.com/ossu/bioinformatics)), and complete at my own pace in the future. When I complete the known concepts, I am expecting to refresh my knowledge. However, I am particulary interested in *algortihmic thinking* and *advancing mathematical background* in bioinformatics.
+Although I am familiar with most of the concepts shared here, I decided to challenge myself to take this,([ossu bioinformatics](https://github.com/ossu/bioinformatics)), and complete at my own pace in the future. When I complete the known concepts, I am expecting to refresh my knowledge. However, I am particulary interested in *algorithmic thinking* and *advancing mathematical background* in bioinformatics.
