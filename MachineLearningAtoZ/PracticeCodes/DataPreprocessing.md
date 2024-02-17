@@ -28,12 +28,12 @@ print(y)
 **Handle Missing Data**
 
 ```python
-# Import the required libraries
+# Libraries required to be imported
 from sklearn.impute import SimpleImputer
 import pandas as pd
 import numpy as np
 
-# Load the dataset
+# Load the dataset as dataframe using pandas as pd
 # Similar example from another tutorial: https://monashdatafluency.github.io/python-workshop-base/modules/missing_values/
 # In our case, we have a dataset having 10 columns and more than 700 rows. The first 9 columns are numerical values consisting the risk factors of the diabetes patient,the last columns is the binary data with the outcome as 0 or 1 (either present or not)
 newdata = pd.read_csv("diabetes.csv")
