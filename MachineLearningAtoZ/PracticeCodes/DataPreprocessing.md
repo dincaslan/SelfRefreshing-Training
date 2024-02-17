@@ -25,7 +25,7 @@ print(X)
 print(y)
 ```
 
-**Handle Missing Data**
+**Handling Missing Data**
 
 ```python
 # Libraries required to be imported
@@ -58,4 +58,4 @@ X[:, 1:9] = imputer.transform(X[:, 1:9])
 print(X)
 ```
 
- **Endoding Categorical Data**
+ **Encoding Categorical Data**
