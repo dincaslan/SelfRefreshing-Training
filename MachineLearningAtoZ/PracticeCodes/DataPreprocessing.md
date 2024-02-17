@@ -1,3 +1,5 @@
+
+```python
 # Libraries required to be imported
 import pandas as pd
 import numpy as np
@@ -16,3 +18,4 @@ y = dataset.iloc[: , -1].values #dependent variable vector
 # Print the X and y
 print(X)
 print(y)
+```
