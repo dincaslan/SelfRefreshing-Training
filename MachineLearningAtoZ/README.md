@@ -1,6 +1,6 @@
 As part of self refreshing/training, I decided to refresh my ML and Python skills as well. 
 
-There was a Udemy course that I registered a long time ago. **Machine Learning A-Z: AI, Python & R + ChatGPT Prize [2024]** has basic examples that the participants need to complete themselves. So, I will sharing the codes with my extensions here with expalanations.
+There was a Udemy course that I registered a long time ago. **Machine Learning A-Z: AI, Python & R + ChatGPT Prize [2024]** has basic examples that the participants need to complete themselves. So, I will be sharing the codes with the extensions here with the explanations.
 
 ----------------------------------------------------------------------------
 
