@@ -50,7 +50,7 @@ print(len(newdata[pd.isnull(newdata)]))
 # Configure the SimpleImputer class, fit the imputer on the dataframe, and finally transform the dataframe with updated version of the missing values
 # Mean. median or constant value options might be choosen to replace the missing value in the simple imputer instance
 # This step requires numpy to be imported as np
-imputer = SimpleImputer(missing_values=np.NaN, strategy="mean")
+imputer = SimpleImputer(missing_values=np.nan, strategy="mean")
 imputer.fit(X[:, 1:9])
 X[:, 1:9] = imputer.transform(X[:, 1:9])
 
