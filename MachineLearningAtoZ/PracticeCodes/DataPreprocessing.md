@@ -1,4 +1,4 @@
-Importing and Prepocessing
+**Importing and Prepocessing**
 
 ```python
 # Libraries required to be imported
@@ -25,4 +25,37 @@ print(X)
 print(y)
 ```
 
-Handle Missing Data
+**Handle Missing Data**
+
+```python
+# Import the required libraries
+from sklearn.impute import SimpleImputer
+import pandas as pd
+import numpy as np
+
+# Load the dataset
+# Similar example from another tutorial: https://monashdatafluency.github.io/python-workshop-base/modules/missing_values/
+# In our case, we have a dataset having 10 columns and more than 700 rows. The first 9 columns are numerical values consisting the risk factors of the diabetes patient,the last columns is the binary data with the outcome as 0 or 1 (either present or not)
+newdata = pd.read_csv("diabetes.csv")
+X = newdata.iloc[: , :-1].values #features matrix
+y = newdata.iloc[: , -1].values #outcome
+
+# Identify the missing data which is represented as NaN
+# pandas isnull() function helps to recognize the missing values
+newdata[pd.isnull(newdata).any(axis=1)]
+
+# Printing the number of missing entries in each column
+print(len(newdata[pd.isnull(newdata)]))
+
+# Configure the SimpleImputer class, fit the imputer on the dataframe, and finally transform the dataframe with updated version of the missing values
+# Mean. median or constant value options might be choosen to replace the missing value in the simple imputer instance
+# This step requires numpy to be imported as np
+imputer = SimpleImputer(missing_values=np.NaN, strategy="mean")
+imputer.fit(X[:, 1:9])
+X[:, 1:9] = imputer.transform(X[:, 1:9])
+
+#Print your updated features
+print(X)
+```
+
+ **Endoding Categorical Data**
