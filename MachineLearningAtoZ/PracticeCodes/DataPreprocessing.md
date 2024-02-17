@@ -7,6 +7,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 # Iris dataset will be example dataset to play here. Load it as a dataframe using pandas (pd)
+# More info: https://scikit-learn.org/stable/auto_examples/datasets/plot_iris_dataset.html
 dataset = pd.read_csv("iris.csv")
 
 # Let's see the first five rows of the dataset
