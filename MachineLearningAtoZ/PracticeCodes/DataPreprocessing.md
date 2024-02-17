@@ -1,3 +1,4 @@
+Importing and Prepocessing
 
 ```python
 # Libraries required to be imported
@@ -12,6 +13,9 @@ dataset = pd.read_csv("iris.csv")
 dataset.head()
 
 # Features will be created in the matrix format and variable in the vector format.
+# iloc allows to subset the relevant columns and matrix
+# [:,:-1] all rows and all columns except the last column
+# [:, -1] al rows of the last column only
 X = dataset.iloc[: , :-1].values #features matrix
 y = dataset.iloc[: , -1].values #dependent variable vector
 
@@ -19,3 +23,5 @@ y = dataset.iloc[: , -1].values #dependent variable vector
 print(X)
 print(y)
 ```
+
+Handle Missing Data
