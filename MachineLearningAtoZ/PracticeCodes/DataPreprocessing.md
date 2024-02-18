@@ -48,6 +48,7 @@ newdata[pd.isnull(newdata).any(axis=1)]
 print(len(newdata[pd.isnull(newdata)]))
 
 # Configure the SimpleImputer class, fit the imputer on the dataframe, and finally transform the dataframe with updated version of the missing values
+# You can drop the NAs, dataset.dropna()
 # Mean, median or constant value options might be choosen to replace the missing value in the simple imputer instance
 # This step requires numpy to be imported as np
 imputer = SimpleImputer(missing_values=np.nan, strategy="mean")
@@ -59,3 +60,13 @@ print(X)
 ```
 
  **Encoding Categorical Data**
+
+```python
+# We will use OneHotEncoder to make categorical data numerical. In this case, it would be better to be aware of advantages and disadvantages of the method. If you want to learn more: https://www.geeksforgeeks.org/ml-one-hot-encoding-of-datasets-in-python/
+
+# Libraries required to be imported
+import pandas as pd
+import numpy as np
+
+```
+ 
