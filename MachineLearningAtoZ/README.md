@@ -8,3 +8,6 @@ Thanks to this course, I am now familiar with **Google Colab**. It is a Python-b
 This makes it easy to work on your code anywhere where you can access your google account. In case you need it! 
 
 To activate a collaborator account, you need to have a Google account first. Then, go the documents and choose new. You will see *More* option. You can search Colab in the search toolbar to install it to your account. Voilà!
+
+----------------------------------------------------------------------------
+
