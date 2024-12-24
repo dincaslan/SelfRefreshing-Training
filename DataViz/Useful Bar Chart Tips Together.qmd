@@ -1,0 +1,289 @@
+---
+title: "Useful Bar Chart Examples Together"
+author: "Fatma B. Dincaslan"
+format: html
+editor: visual
+---
+
+## Bar Charts
+
+```{r}
+# https://r-graph-gallery.com/368-black-and-white-barchart.html
+# https://r-graph-gallery.com/209-the-options-of-barplot.html#texture
+# https://stackoverflow.com/questions/72449952/making-a-grouped-bar-chart-in-r
+# https://stackoverflow.com/questions/75416645/how-do-i-move-and-unstack-legend-elements-when-using-ggplot-and-ggpattern
+# https://cran.r-project.org/web/packages/ggbreak/vignettes/ggbreak.html
+
+library(ggpattern)
+library(ggplot2)
+library(hrbrthemes)
+library(tidyr)
+library(tidyverse)
+library(ggthemes)
+library(ggpubr)
+library(patternplot)
+library(ggbreak)
+```
+
+Basic Bar Plots for Basic Data
+
+```{r}
+# let's creaate another example data frame
+df = data.frame(
+  GoI=c("TP53","IFGA","GAPDH","FGF2","BCL2"), # Mock gene of Interests
+  Percentage=sample(seq(7,15), 5) # Mock expression
+)
+
+# check out how it looks like
+df
+
+# create a bar chart for the given values above
+ggplot(df, aes(x=GoI, y=Percentage, fill=GoI)) +
+  geom_bar(stat="identity", alpha=.6, width=.4) +
+  scale_fill_grey(start=0, end=0.8) +  # start and end define the range of grays
+  theme_bw()
+
+### Bar width & space between bars
+barplot(height=df$Percentage, names=df$GoI, col=rgb(0.2,0.4,0.8,0.6), space=c(0.1,0.2,3,1.2,0.3) ) # modify space
+ 
+barplot(height=df$Percentage, names=df$GoI, col=rgb(0.3,0.4,0.5,0.6), width=c(0.5,0.2,3,1.8,0.3) ) # modify width
+
+```
+
+Patterns for Basic Data
+
+```{r}
+### To fill pattern for each 
+ggplot(df, aes(x=GoI, y=Percentage)) +
+ geom_col_pattern(
+    aes(pattern=GoI,
+        pattern_angle=GoI,
+        pattern_spacing=GoI
+        ), 
+    fill            = 'white',
+    colour          = 'black', 
+    pattern_density = 0.25, 
+    pattern_fill    = 'black',
+    pattern_colour  = 'darkgrey'
+  ) +
+  theme_bw()
+
+# another alternative
+barplot( height=df$Percentage, names=df$GoI , density=c(5,10,50,20,13) , angle=c(0,25,89,11,36) , col="brown"   )
+```
+
+Error Bars for Bar Graphs
+
+```{r}
+### Standard error bars
+# this requires sd statistics to be added as a new column
+# create dummy data
+data <- data.frame(
+  GoI=letters[1:5],
+  Percentage=sample(seq(4,15),5),
+  sd=c(1,0.2,3,2,4)
+)
+
+ggplot(data) +
+    geom_bar( aes(x=GoI, y=Percentage), stat="identity", fill="skyblue", alpha=0.7) +
+    geom_errorbar( aes(x=GoI, ymin=Percentage-sd, ymax=Percentage+sd), width=0.4, colour="orange", alpha=0.9, size=1.3)
+
+# how does data look
+data
+
+# Pattern with error bar
+ggplot(data, aes(x=GoI, y=Percentage)) +
+ geom_col_pattern(
+    aes(pattern=GoI,
+        pattern_angle=GoI,
+        pattern_spacing=GoI
+        ), 
+    fill            = 'white',
+    colour          = 'black', 
+    pattern_density = 0.25, 
+    pattern_fill    = 'black',
+    pattern_colour  = 'darkgrey'
+  ) +
+  theme_bw() + 
+  geom_errorbar(aes(x=GoI, ymin=Percentage-sd, ymax=Percentage+sd), width=0.4, colour="orange", alpha=0.9, size=1.3)
+
+# you can play with the shape of the error bar as well
+# line + dot
+ggplot(data) +
+  geom_bar( aes(x=GoI, y=Percentage), stat="identity", fill="darkblue", alpha=0.5) +
+  geom_pointrange(aes(x=GoI, y= Percentage, ymin=Percentage-sd, ymax=Percentage+sd), colour="orange", alpha=0.9, size=1.3)
+ 
+### The data can be flipped into another direction
+# horizontal
+ggplot(data) +
+  geom_bar( aes(x=GoI, y=Percentage), stat="identity", fill="darkblue", alpha=0.5) +
+  geom_errorbar(aes(x=GoI, ymin=Percentage-sd, ymax=Percentage+sd), colour="orange", width=0.4, alpha=0.9, size=1.3) +
+  coord_flip()
+```
+
+Grouping The Data
+
+```{r}
+### Grouping the data together
+# let's creaate another example data frame
+ndata <- data.frame(GoI = c("TP53","TP53","IFGA","IFGA","GAPDH","GAPDH","FGF2","FGF2","BCL2","BCL2" ),
+                    condition = c("Control","Disease","Control","Disease","Control","Disease","Control","Disease","Control","Disease" ),
+                    Percentage = sample(seq(4,39) , 10 , replace=T),
+                    sd = sample(seq(0.1,1.2) , 10 , replace=T))
+
+# see how does data structure looks like
+ndata
+
+### Tidyr grouping
+ndata |>
+  ggplot(aes(x = condition, y = Percentage, fill = GoI)) +
+  # Implement a grouped bar chart
+  geom_bar(position = "dodge", stat = "identity")
+
+ndata |>
+  ggplot(aes(x = GoI, y = Percentage, fill = condition)) +
+  # Implement a grouped bar chart
+  geom_bar(position = "dodge", stat = "identity")
+```
+
+Patterns and Gaps for Grouped Bar Chart
+
+```{r}
+# Add some spices (patterns and gaps)
+ndata |>
+  ggplot(aes(x = GoI, y = Percentage, fill = condition, pattern = GoI, pattern_angle = GoI)) +
+  # Implement a grouped bar chart
+  geom_bar(position = "dodge", stat = "identity")+
+  geom_bar_pattern(
+    position = "dodge",
+    stat= "identity", 
+    pattern_color = "black",
+    color = "white",
+    pattern_aspect_ratio = 1,
+    pattern_density = 0.1,
+    pattern_spacing = 0.025,
+    pattern_key_scale_factor = 0.6
+  ) +
+  geom_errorbar(aes(ymin = Percentage-sd, ymax = Percentage+sd), position =  position_dodge(width = 0.9), width = 0.1)+
+  scale_y_continuous(expand = expansion(0),
+                     limits = c(0,100)) +
+  scale_fill_manual(values = c("darkblue", "darkorange"),
+                    name = "condition",
+                    c('none', 'stripe', 'circle', 'stripe','circle')) + 
+  theme_par() 
+
+
+
+# add the cut/break the bar
+ndata |>
+  ggplot(aes(x = GoI, y = Percentage, fill = condition, pattern = GoI, pattern_angle = GoI)) +
+  # Implement a grouped bar chart
+  geom_bar(position = "dodge", stat = "identity")+
+  geom_bar_pattern(
+    position = "dodge",
+    stat = "identity", 
+    pattern_color = "black",
+    color = "white",
+    pattern_density = 0.1,
+    pattern_spacing = 0.025,
+    pattern_key_scale_factor = 0.6
+  ) +
+  geom_errorbar(aes(ymin = Percentage-sd, ymax = Percentage+sd),
+                position =  position_dodge(width = 0.9), width = 0.1)+
+  scale_y_cut(breaks=c(7, 18), which=c(1, 3), scales=c(3, 0.5))+
+  scale_y_continuous(expand = expansion(0),
+                     limits = c(0,100)) +
+  scale_fill_manual(values = c("darkblue", "darkorange"),
+                    name = "condition")+ 
+  theme_par() +
+  labs(x = "", y = "Percentage", fill = "condition", pattern = "GoI") + 
+  guides(pattern = guide_legend(override.aes = list(fill ="lightgrey"), title.position="top", title.hjust = 0.5), fill = guide_legend(override.aes = list(pattern = "none"),title.position="top", title.hjust = 0.5)) +
+  geom_hline(yintercept=0) 
+```
+
+Category of Unmatched Bar Chart Groups
+
+```{r}
+# If the groups are matching for each category, you can use facet_wrap()
+
+### Let's add the Cat1 vs Cat2 GoI category
+# let's creaate another example data frame
+ncdata <- data.frame(category = c("Cat1","Cat1","Cat1","Cat1","Cat1","Cat1","Cat2","Cat2","Cat2","Cat2" ), GoI = c("TP53","TP53","IFGA","IFGA","GAPDH","GAPDH","FGF2","FGF2","BCL2","BCL2" ),
+                    condition = c("Control","Disease","Control","Disease","Control","Disease","Control","Disease","Control","Disease" ),
+                    Percentage = sample(seq(4,39) , 10 , replace=T),
+                    sd = sample(seq(0.1,1.2) , 10 , replace=T))
+
+# see how does the data structure looks like
+ncdata
+  
+ncdata |>
+  ggplot(aes(x = GoI, y = Percentage, fill = condition, pattern = GoI, pattern_angle = GoI), group="category") +
+  # Implement a grouped bar chart
+  geom_bar(position = "dodge", stat = "identity") +
+   theme(strip.placement = "outside") +
+  geom_bar_pattern(
+    position = "dodge",
+    stat = "identity", 
+    pattern_color = "black",
+    color = "white",
+    pattern_density = 0.1,
+    pattern_spacing = 0.025,
+    pattern_key_scale_factor = 0.6
+  ) +
+  geom_errorbar(aes(ymin = Percentage-sd, ymax = Percentage+sd),
+                position =  position_dodge(width = 0.9), width = 0.1)+
+  scale_y_continuous(expand = expansion(0),
+                     limits = c(0,100)) +
+  scale_fill_manual(values = c("darkblue", "darkorange"),
+                    name = "condition")+ 
+  theme_par() +
+  labs(x = "", y = "Percentage", fill = "condition", pattern = "GoI") + 
+  guides(pattern = guide_legend(override.aes = list(fill ="lightgrey"), title.position="top", title.hjust = 0.5), fill = guide_legend(override.aes = list(pattern = "none"),title.position="top", title.hjust = 0.5)) +
+  geom_hline(yintercept=0) + 
+  facet_grid(category~., scales="free", space = "free") +  # this will help you to separate categories
+  coord_flip()
+  
+```
+
+```{r}
+# BONUS (not covered):significance testing, p-value and adding asteriks to graphs, https://www.r-bloggers.com/2017/06/add-p-values-and-significance-levels-to-ggplots/
+# sessionInfo()
+
+
+# attached base packages:
+# [1] stats     graphics  grDevices datasets  utils     methods   base     
+# 
+# other attached packages:
+#  [1] patternplot_1.0.0 ggbreak_0.1.2     ggpubr_0.6.0      ggthemes_5.1.0    lubridate_1.9.3  
+#  [6] forcats_1.0.0     stringr_1.5.1     dplyr_1.1.4       purrr_1.0.2       readr_2.1.5      
+# [11] tibble_3.2.1      tidyverse_2.0.0   tidyr_1.3.1       hrbrthemes_0.8.7  ggplot2_3.5.1    
+# [16] ggpattern_1.1.3  
+# 
+# loaded via a namespace (and not attached):
+#  [1] tidyselect_1.2.1        farver_2.1.2            fastmap_1.2.0          
+#  [4] fontquiver_0.2.1        digest_0.6.37           timechange_0.3.0       
+#  [7] lifecycle_1.0.4         sf_1.0-19               magrittr_2.0.3         
+# [10] compiler_4.3.1          rlang_1.1.4             tools_4.3.1            
+# [13] utf8_1.2.4              yaml_2.3.10             knitr_1.49             
+# [16] ggsignif_0.6.4          labeling_0.4.3          classInt_0.4-10        
+# [19] aplot_0.2.4             abind_1.4-8             KernSmooth_2.23-22     
+# [22] withr_3.0.2             grid_4.3.1              fansi_1.0.6            
+# [25] gdtools_0.4.1           e1071_1.7-16            colorspace_2.1-1       
+# [28] extrafontdb_1.0         scales_1.3.0            cli_3.6.3              
+# [31] crayon_1.5.3            generics_0.1.3          RcppParallel_5.1.9     
+# [34] rstudioapi_0.17.1       tzdb_0.4.0              DBI_1.2.3              
+# [37] cachem_1.1.0            proxy_0.4-27            ggplotify_0.1.2        
+# [40] BiocManager_1.30.25     vctrs_0.6.5             yulab.utils_0.1.8      
+# [43] fontBitstreamVera_0.1.1 carData_3.0-5           car_3.1-3              
+# [46] gridGraphics_0.5-1      hms_1.1.3               patchwork_1.3.0        
+# [49] rstatix_0.7.2           Formula_1.2-5           jpeg_0.1-10            
+# [52] systemfonts_1.1.0       units_0.8-5             glue_1.8.0             
+# [55] stringi_1.8.4           gtable_0.3.6            extrafont_0.19         
+# [58] munsell_0.5.1           pillar_1.9.0            htmltools_0.5.8.1      
+# [61] R6_2.5.1                evaluate_1.0.1          png_0.1-8              
+# [64] backports_1.5.0         memoise_2.0.1           broom_1.0.7            
+# [67] renv_1.0.11             fontLiberation_0.1.0    ggfun_0.1.8            
+# [70] class_7.3-22            Rcpp_1.0.13-1           gridExtra_2.3          
+# [73] Rttf2pt1_1.3.12         gridpattern_1.2.2       xfun_0.49              
+# [76] fs_1.6.5                pkgconfig_2.0.3 
+```
