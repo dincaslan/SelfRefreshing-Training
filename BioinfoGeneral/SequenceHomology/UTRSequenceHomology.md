@@ -7,9 +7,9 @@ I categorize the similarity of genes under 5 main categories:
   
 As we are using model organisms in our research about the genes or transcripts to target or the drugs to test, taking these similarities into account might help us to draw reliable conclusions. 
 
-If you ever used [NCBI-BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), you might be familiar with "Sequence similarity (homology)" search.
+If you have ever used [NCBI-BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), you might be familiar with "Sequence similarity (homology)" search.
 
-The mRNA has coding (translated) and non-coding (untranslated) regions. I simplify them in 3 main categories below: 5' UTR, CDS and 3' UTR. Each has its unique role in post-transcription and gene regulation. Although the functional emphasis is on the coding region in most cases, and it is not always a good idea to think these regions separately (e.g., [example](https://joshuaopayne.com/thermostability)), it might be important to have an idea in certain cases where you do UTR focused research.  
+The mRNA has coding (translated) and non-coding (untranslated) regions. I simplify them in 3 main categories below: 5' UTR, CDS and 3' UTR. Each has its unique role in post-transcription and gene regulation. Although the functional emphasis is on the translatable region in most cases, and it is not always a good idea to think these regions separately (e.g., [example](https://joshuaopayne.com/thermostability)), it might be important to have an idea in certain cases where you do UTR focused research.  
 
    ==5'UTR ====*======CDS=====================*=3'UTR ===========
 
