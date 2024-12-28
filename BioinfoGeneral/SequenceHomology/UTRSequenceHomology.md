@@ -58,7 +58,7 @@ blastn -query /Your/Path/To/The/File/HS_ACTB.txt -subject /Your/Path/To/The/File
 # The output format is not a single score. You need to think about how to extract the relevant information in a single file (I skip this since we have an alternative below).
 ```
 ```bash
-# You can loop through all the matching gene name files separately
+# You can loop through all the matching gene name FASTA files separately
 dir="/Your/path/to/File"
 for hGoI in "$dir"/HS_*.txt; do
   # Decide the basename based on the extension after _
