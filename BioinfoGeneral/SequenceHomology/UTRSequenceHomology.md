@@ -15,9 +15,13 @@ The mRNA has coding (translated) and non-coding (untranslated) regions. I simpli
 
 Moreover, I realized that there are not many tools and tutorials available to compare untranslated regions on bulk format, I decided make one for 5' UTR.
 
-### Using Command Line
+# -------------------------------
+
+## Using Command Line
 The first way is using command lines: wget, eutils and blast+. 
 Since most tools has whole FASTA and the coding sequence only FASTA (CDS), I simply substract the CDS from Full FASTA to have 5 prime non-coding sequences.
+
+### Retrieving the FASTA
 
 ```bash
 # More info about eutils and efectch, https://www.ncbi.nlm.nih.gov/books/NBK179288/, https://github.com/NCBI-Hackathons/EDirectCookbook, https://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/, https://www.ncbi.nlm.nih.gov/books/NBK25499/,
@@ -43,6 +47,7 @@ echo "$CompleteFASTA" | grep ">" | while read -r header; do
 done
 
 ```
+### NCBI Alignment
 
 Another good news is that you can actullay use ncbi-blast tool in the command line (terrific!).
 I used [homebrew](https://formulae.brew.sh/formula/blast) to downlaod the Blast+.
@@ -77,7 +82,9 @@ done
 ```
 Here is a useful [BLAST+ tutorial](https://conmeehan.github.io/blast+tutorial.html).
 
-### Using R
+# -------------------------------
+
+## Using R
 I was also wondering whether there is a way to compare 5 prime UTR sequence similarity of all transcripts of ortholog* genes of mouse and human (you can expand to other species as well.)
 The alternative is using Ensembl-BiomaRt for the retrieval of the relevant non-coding/coding FASTA and compare them using stringdist package of R for the similarity.
 > If you are unsure about orthology, then plese feel free to use [Emsemb BiomaRt](https://www.ensembl.org/info/data/biomart/index.html) to check it out (it has both an online tool and bioconductor package to run in R).
@@ -94,6 +101,7 @@ library(biomaRt)
 hensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 mensembl <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
 ```
+### Retrieving the FASTA
 
 ```r
 # List genes of interests
@@ -128,6 +136,7 @@ mtranscripts <-mtranscripts[ mtranscripts["5utr"]!="Sequence unavailable",]
 # write.csv(mtranscript_data, "mtranscript_accessions.csv", row.names = FALSE)
 ```
 
+### FASTA String Matching
 ```r
 # Approximate string matching, the similarity between two strings (the paper: https://cran.r-project.org/web/packages/stringdist/vignettes/RJournal_6_111-122-2014.pdf)
 mtranscripts$mgi_symbol<-toupper(mtranscripts$mgi_symbol) # make mgi symbol similar to hgnc for downstream processes
