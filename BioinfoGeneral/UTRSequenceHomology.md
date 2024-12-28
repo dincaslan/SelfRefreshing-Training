@@ -27,8 +27,7 @@ done
 ```
 ```bash
 
-# You can try a for llop for multiple inputs 
-
+# You can go with loop for multiple inputs 
 # out_file="UTR5p_out.txt"
 # TranscriptIDs=("NM_010240.1", "NM_010240.2") # examples
 # FASTAform=("fasta", "fasta_cds_na") # to substract cds from the complete sequence to have 5 and 3UTR depending on interests, mine is 5pUTR
@@ -40,13 +39,15 @@ done
 #   done
 # done
 ```
+
 Another good news is that you can actullay use ncbi-blast tool in the command line (terrific!).
-I used [homebrew](https://formulae.brew.sh/formula/blast) to downlaod the Blast+
-[BLAST+ tutorial](https://conmeehan.github.io/blast+tutorial.html)
+I used [homebrew](https://formulae.brew.sh/formula/blast) to downlaod the Blast+.
 ```bash
 # Let's say you want to compare human and mouse ACTB gene
 blastn -query /Your/Path/To/The/File/HS_ACTB.txt -subject /Your/Path/To/The/File/MS_ACTB.txt -out /Your/Path/To/The/File/test_blastn.txt 
 ```
+Here is a useful [BLAST+ tutorial](https://conmeehan.github.io/blast+tutorial.html).
+
 ### Using R
 The alternative is using Ensembl-BiomaRt for the retrieval of the relevant non-coding/coding FASTA and compare them using stringdist package of R for the similarity.
 I was also wondering whether there is a way to compare 5 prime UTR sequence similarity of all transcripts of ortholog* genes of mouse and human (you can expand to other species as well.)
