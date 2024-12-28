@@ -129,13 +129,13 @@ results <- data.frame(
 
 # Loop over each element in gene of interest of two selected species to calculate distance, and save it
 for (genes in unique(htranscripts$hgnc_symbol)) {
-  # Filter X and Y for the current group
+  # Filter gene symbols in human and mouse
   hGoI <- htranscripts[htranscripts$hgnc_symbol == genes,]
   mGoI <- mtranscripts[mtranscripts$hgnc_symbol == genes,]
   
-  # Proceed only if there are matches in both X and Y for this group
+  # Proceed only if there are matches in gene symbols in human and mouse
   if (nrow(hGoI) > 0 && nrow(mGoI) > 0) {
-    # Compare each sequence in X with each sequence in Y
+    # Compare each sequence of unique genes available in human and mouse
     for (i in 1:nrow(hGoI)) {
       for (j in 1:nrow(mGoI)) {
         # Extract sequences and types
