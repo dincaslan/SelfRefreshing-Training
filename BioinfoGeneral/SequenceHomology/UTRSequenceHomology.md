@@ -57,10 +57,25 @@ blastn -query /Your/Path/To/The/File/HS_ACTB.txt -subject /Your/Path/To/The/File
 
 # The output format is not a single score. You need to think about how to extract the relevant information in a single file (I skip this since we have an alternative below).
 ```
-
+```bash
+# You can loop through all the matching gene name files separately
+dir="/Your/path/to/File"
+for hGoI in "$dir"/HS_*.txt; do
+  # Decide the basename based on the extension after _
+  base_name=$(basename "$hGoI" | sed -E 's/^h_(.+)\.txt/\1/')
+  # Corresponding mouse gene file
+  mGoI="$dir/MS_$base_name.txt"
+  # If there is matching mouse gene file exist
+  if [[ -f "$mGoI" ]]; then
+    out_file="$dir/blast_$base_name.txt" # output file name
+    blastn -query "$hGoI" -subject "$mGoI" -out "$out_file"
+    echo "Processed: $base_name -> Output: $out_file" # track the progress
+  else
+    echo "Warning: No matching $mGoI file for $hGoI" #in case nothing compare from mouse side
+  fi
+done
+```
 Here is a useful [BLAST+ tutorial](https://conmeehan.github.io/blast+tutorial.html).
-> A note on this section. I need to work on the command line part more for the automation of the task for multiple inputs, which you can improve for your task if you are interested,
-however, I share my script in R that does a similar job, except for the similarity search algorithm, which you can modify if you are interested in not only  estimations but also better alignment measurements.
 
 ### Using R
 I was also wondering whether there is a way to compare 5 prime UTR sequence similarity of all transcripts of ortholog* genes of mouse and human (you can expand to other species as well.)
