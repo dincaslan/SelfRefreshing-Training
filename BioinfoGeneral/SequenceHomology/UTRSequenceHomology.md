@@ -13,7 +13,7 @@ The mRNA has coding (translated) and non-coding (untranslated) regions. I simpli
 
    ==5'UTR ====*======CDS=====================*=3'UTR ===========
 
-Moreover, I realized that there are not many tools and tutorials available to compare untranslated regions on bulk format, I decided make one for 5' UTR.
+Moreover, I realized that there are not many tools and tutorials available to compare untranslated regions in bulk format, I decided make one for 5' UTR.
 
 -------------------------------
 
