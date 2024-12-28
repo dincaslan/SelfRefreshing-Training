@@ -1,4 +1,4 @@
-I categorize the similarity for a gene under 5 main categories:
+I categorize the similarity of genes under 5 main categories:
 - Sequence
 - Function
 - Structure
