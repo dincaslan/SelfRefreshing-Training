@@ -59,6 +59,8 @@ blastn -query /Your/Path/To/The/File/HS_ACTB.txt -subject /Your/Path/To/The/File
 ```
 
 Here is a useful [BLAST+ tutorial](https://conmeehan.github.io/blast+tutorial.html).
+> A note on this section. I need to work on the command line part more for the automation of the task for multiple inputs, which you can improve for your task if you are interested,
+however, I share my script in R that does a similar job, except for the similarity search algorithm, which you can modify if you are interested in not only  estimations but also better alignment measurements.
 
 ### Using R
 I was also wondering whether there is a way to compare 5 prime UTR sequence similarity of all transcripts of ortholog* genes of mouse and human (you can expand to other species as well.)
