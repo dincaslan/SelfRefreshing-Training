@@ -88,7 +88,7 @@ Here is a useful [BLAST+ tutorial](https://conmeehan.github.io/blast+tutorial.ht
 
 ## Using R
 I was also wondering whether there is a way to compare 5 prime UTR sequence similarity of all transcripts of ortholog* genes of mouse and human (you can expand to other species as well.)
-The alternative is using Ensembl-BiomaRt for the retrieval of the relevant non-coding/coding FASTA and compare them using stringdist package of R for the similarity.
+The alternative is using Ensembl-BiomaRt for the retrieval of the relevant untranslated/coding FASTA and compare them using stringdist package of R for the similarity.
 > If you are unsure about orthology, then plese feel free to use [Emsemb BiomaRt](https://www.ensembl.org/info/data/biomart/index.html) to check it out (it has both an online tool and bioconductor package to run in R).
 ```r
 # Downloading the relevant packages
