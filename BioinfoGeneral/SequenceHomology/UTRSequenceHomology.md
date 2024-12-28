@@ -47,11 +47,11 @@ done
 Another good news is that you can actullay use ncbi-blast tool in the command line (terrific!).
 I used [homebrew](https://formulae.brew.sh/formula/blast) to downlaod the Blast+.
 
+> The file of the format should be FASTA for blast+ to work
+> ">NM_002019.4 Homo sapiens fms related receptor tyrosine kinase 1 (FLT1), transcript variant 1, mRNA
+> ATCGAGGTCCGCGGGAGGCTCGGAGCGCGCCAGGCGGACACTCCTCTCGGCTCCTCCCCGGCAGCGGCGG....
 ```bash
 # Let's say you want to compare human and mouse ACTB gene (you can adjust according to your files)
-# The file of the format should be FASTA for blast+ to work
-# ">NM_002019.4 Homo sapiens fms related receptor tyrosine kinase 1 (FLT1), transcript variant 1, mRNA
-# ATCGAGGTCCGCGGGAGGCTCGGAGCGCGCCAGGCGGACACTCCTCTCGGCTCCTCCCCGGCAGCGGCGG....
 
 blastn -query /Your/Path/To/The/File/HS_ACTB.txt -subject /Your/Path/To/The/File/MS_ACTB.txt -out /Your/Path/To/The/File/test_blastn.txt
 
