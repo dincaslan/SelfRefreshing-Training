@@ -98,18 +98,53 @@ mtranscripts <-mtranscripts[ mtranscripts["5utr"]!="Sequence unavailable",]
 
 ```r
 # Approximate string matching, the similarity between two strings (the paper: https://cran.r-project.org/web/packages/stringdist/vignettes/RJournal_6_111-122-2014.pdf)
-# Initialize a data frame to keep the results
-results <- data.frame(Human = character(), Mouse = character(), Distance = numeric(), stringsAsFactors = FALSE)
+mtranscripts$mgi_symbol<-toupper(mtranscripts$mgi_symbol) # make mgi symbol similar to hgnc for downstream processes
+names(mtranscripts)[names(mtranscripts) == "mgi_symbol"] <- "hgnc_symbol"
 
-# Loop over each gene of interests of two selected species to calculate distance
-for (x in htranscripts$ensembl_transcript_id) {
-  for (y in mtranscripts$ensembl_transcript_id) {
-    dist <- stringdist::stringdist(x, y, method = "lv") # "lv" for Levenshtein distance: "counting the weighted number of insertions, deletions and substitutions necessary to turn one string into another"
-    results <- rbind(results, data.frame(Human = x, Mouse = y, Distance = dist))
+# Initialize a data frame to keep the results
+results <- data.frame(
+  hGoI = character(),
+  hToI = character(),
+  mGoI = character(),
+  mToI = character(),
+  hgnc_symbol = character(),
+  Distance = numeric(),
+  stringsAsFactors = FALSE
+)
+
+# Loop over each element in gene of interest of two selected species to calculate distance, and save it
+for (genes in unique(htranscripts$hgnc_symbol)) {
+  # Filter X and Y for the current group
+  hGoI <- htranscripts[htranscripts$hgnc_symbol == genes,]
+  mGoI <- mtranscripts[mtranscripts$hgnc_symbol == genes,]
+  
+  # Proceed only if there are matches in both X and Y for this group
+  if (nrow(hGoI) > 0 && nrow(mGoI) > 0) {
+    # Compare each sequence in X with each sequence in Y
+    for (i in 1:nrow(hGoI)) {
+      for (j in 1:nrow(mGoI)) {
+        # Extract sequences and types
+        h_type <- hGoI$ensembl_transcript_id[i]
+        h_seq <- hGoI[,"5utr"][i]
+        m_type <- mGoI$ensembl_transcript_id[j]
+        m_seq <- mGoI[,"5utr"][j]
+        
+        dist <- stringdist::stringdist(h_seq, m_seq, method = "lv") # "lv" for Levenshtein distance: "counting the weighted number of insertions, deletions and substitutions necessary to turn one string into another"
+        
+        # Append the results data with each comparsion
+        results <- rbind(results, data.frame(
+          hGoI = h_type,
+          hToI = h_seq,
+          mGoI = m_type,
+          mToI = m_seq,
+          hgnc_symbol = genes,
+          Distance = dist
+        )) ## It would be more meaningful if there is a treshold for the distance measurements based on the mismatches.
+      }
+    }
   }
 }
 
-# It would be more meaningful if there is a treshold for the distance measurements based on the mismatches
-results # final results will give you some number corresponding to each matching transcript. The lower the merries in terms of distance. 
+head(results) # only first 6 row of final results 
 ```
 Here I attached the [Quarto doc]() of how it looks like. 
