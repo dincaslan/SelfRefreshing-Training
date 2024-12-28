@@ -15,7 +15,7 @@ The mRNA has coding (translated) and non-coding (untranslated) regions. I simpli
 
 Moreover, I realized that there are not many tools and tutorials available to compare untranslated regions on bulk format, I decided make one for 5' UTR.
 
-# -------------------------------
+-------------------------------
 
 ## Using Command Line
 The first way is using command lines: wget, eutils and blast+. 
@@ -82,7 +82,7 @@ done
 ```
 Here is a useful [BLAST+ tutorial](https://conmeehan.github.io/blast+tutorial.html).
 
-# -------------------------------
+-------------------------------
 
 ## Using R
 I was also wondering whether there is a way to compare 5 prime UTR sequence similarity of all transcripts of ortholog* genes of mouse and human (you can expand to other species as well.)
