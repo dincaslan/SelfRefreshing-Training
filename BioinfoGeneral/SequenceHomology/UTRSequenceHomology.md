@@ -138,7 +138,7 @@ for (genes in unique(htranscripts$hgnc_symbol)) {
     # Compare each sequence of unique genes available in human and mouse
     for (i in 1:nrow(hGoI)) {
       for (j in 1:nrow(mGoI)) {
-        # Extract sequences and types
+        # Extract sequences and transcripts
         h_type <- hGoI$ensembl_transcript_id[i]
         h_seq <- hGoI[,"5utr"][i]
         m_type <- mGoI$ensembl_transcript_id[j]
