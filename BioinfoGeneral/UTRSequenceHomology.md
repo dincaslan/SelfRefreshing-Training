@@ -1,6 +1,8 @@
 If you ever used [NCBI-BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), you might be familiar with "Sequence similarity (homology)" search.
 
 ### Using Command Line
+The first way is using command lines: wget, eutils and blast+. 
+
 ```bash
 # More info about eutils and efectch, https://www.ncbi.nlm.nih.gov/books/NBK179288/, https://github.com/NCBI-Hackathons/EDirectCookbook, https://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/, https://www.ncbi.nlm.nih.gov/books/NBK25499/,
 # and ncbi datasets, https://www.ncbi.nlm.nih.gov/datasets/docs/v2/download-and-install/, https://github.com/ncbi/datasets, https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/gene-package/, https://www.nature.com/articles/s41597-024-03571-y  as an alternative
@@ -25,34 +27,28 @@ echo "$CompleteFASTA" | grep ">" | while read -r header; do
 done
 
 ```
-```bash
-
-# You can go with loop for multiple inputs 
-# out_file="UTR5p_out.txt"
-# TranscriptIDs=("NM_010240.1", "NM_010240.2") # examples
-# FASTAform=("fasta", "fasta_cds_na") # to substract cds from the complete sequence to have 5 and 3UTR depending on interests, mine is 5pUTR
-
-# for id in "${TranscriptIDs[@]}"; do
-#   for fform in "${FASTAform[@]}"; do
-#     URL=$(printf "$URL_base" "$id" "$fform")
-#     wget "$URL" -O ->> $out_file
-#   done
-# done
-```
 
 Another good news is that you can actullay use ncbi-blast tool in the command line (terrific!).
 I used [homebrew](https://formulae.brew.sh/formula/blast) to downlaod the Blast+.
+
 ```bash
-# Let's say you want to compare human and mouse ACTB gene
-blastn -query /Your/Path/To/The/File/HS_ACTB.txt -subject /Your/Path/To/The/File/MS_ACTB.txt -out /Your/Path/To/The/File/test_blastn.txt 
+# Let's say you want to compare human and mouse ACTB gene (you can adjust according to your files)
+# The file of the format should be FASTA for blast+ to work
+# ">NM_002019.4 Homo sapiens fms related receptor tyrosine kinase 1 (FLT1), transcript variant 1, mRNA
+# ATCGAGGTCCGCGGGAGGCTCGGAGCGCGCCAGGCGGACACTCCTCTCGGCTCCTCCCCGGCAGCGGCGG....
+
+blastn -query /Your/Path/To/The/File/HS_ACTB.txt -subject /Your/Path/To/The/File/MS_ACTB.txt -out /Your/Path/To/The/File/test_blastn.txt
+
+# The output format is not a single score. You need to think about how to extract the relevant information in a single file (I skip this since we have an alternative below).
 ```
+
 Here is a useful [BLAST+ tutorial](https://conmeehan.github.io/blast+tutorial.html).
 
 ### Using R
-The alternative is using Ensembl-BiomaRt for the retrieval of the relevant non-coding/coding FASTA and compare them using stringdist package of R for the similarity.
 I was also wondering whether there is a way to compare 5 prime UTR sequence similarity of all transcripts of ortholog* genes of mouse and human (you can expand to other species as well.)
-If you are unsure about orthology, then plese feel free to use [Emsemb BiomaRt](https://www.ensembl.org/info/data/biomart/index.html) to check it out (it has both an online tool and bioconductor package to run in R).
+The alternative is using Ensembl-BiomaRt for the retrieval of the relevant non-coding/coding FASTA and compare them using stringdist package of R for the similarity.
 
+* If you are unsure about orthology, then plese feel free to use [Emsemb BiomaRt](https://www.ensembl.org/info/data/biomart/index.html) to check it out (it has both an online tool and bioconductor package to run in R).
 ```r
 # Downloading the relevant packages
 # if (!require("BiocManager", quietly = TRUE))
@@ -66,7 +62,6 @@ library(biomaRt)
 hensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 mensembl <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
 ```
-
 
 ```r
 # List genes of interests
