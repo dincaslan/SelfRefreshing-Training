@@ -5,7 +5,7 @@ I categorize the similarity of genes under 5 main categories:
 - Location
 - Network
   
-As we are using model organisms in our research to make conclusions about the genes or transcripts to target or the drugs to test, taking these similarities into account might help us to draw reliable conclusions. 
+As we are using model organisms in our research about the genes or transcripts to target or the drugs to test, taking these similarities into account might help us to draw reliable conclusions. 
 
 If you ever used [NCBI-BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), you might be familiar with "Sequence similarity (homology)" search.
 
