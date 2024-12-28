@@ -129,7 +129,8 @@ for (genes in unique(htranscripts$hgnc_symbol)) {
         m_type <- mGoI$ensembl_transcript_id[j]
         m_seq <- mGoI[,"5utr"][j]
         
-        dist <- stringdist::stringdist(h_seq, m_seq, method = "lv") # "lv" for Levenshtein distance: "counting the weighted number of insertions, deletions and substitutions necessary to turn one string into another"
+        dist <- stringdist::stringdist(h_seq, m_seq, method = "lv") # "lv" for Levenshtein distance:
+# "counting the weighted number of insertions, deletions and substitutions necessary to turn one string into another"
         
         # Append the results data with each comparsion
         results <- rbind(results, data.frame(
