@@ -47,7 +47,7 @@ echo "$CompleteFASTA" | grep ">" | while read -r header; do
 done
 
 ```
-> To automate this taks, you will need to have list of known accessions and following a for lopp for multiple transcripts. 
+> To automate this taks, you will need to have list of known accessions.
 ### Blast Alignment
 
 Another good news is that you can actullay use ncbi-blast tool in the command line (terrific!).
