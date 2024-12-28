@@ -1,5 +1,20 @@
 If you ever used [NCBI-BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), you might be familiar with "Sequence similarity (homology)" search.
 
+I categorize the similarity under 5 main categories:
+- Sequence
+- Function
+- Structure
+- Location
+- Network
+  
+As we are using model organisms in our research to make conclusions about the genes we found or the drugs we tested, taking these similarities into account might help us to draw reliable conclusions. 
+
+The mRNA has coding (translated) and non-coding (untranslated) regions. I simplify them in 3 main catgories below: 5' UTR, CDS and 3' UTR. Each has its unique role in post-transcription and gene regulation. Although the emphasis on coding region in most cases, and it is not always a good idea to think these separately for the gene regulation, it might be important to have an idea in cases where you do UTR focused research.  
+
+   5' UTR            CDS                3' UTR
+============ ======================== =========== 
+Moreover, I realized that there are not many tools and tutorials available to compare untranslated regions on bulk format, I decided make one for 5' UTR.
+
 ### Using Command Line
 The first way is using command lines: wget, eutils and blast+. 
 Since most tools has whole FASTA and the coding sequence only FASTA (CDS), I simply substract the CDS from Full FASTA to have 5 prime non-coding sequences.
