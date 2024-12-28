@@ -47,6 +47,7 @@ echo "$CompleteFASTA" | grep ">" | while read -r header; do
 done
 
 ```
+> To automate this taks, you will need to have list of known accessions and following a for lopp for multiple transcripts. 
 ### Blast Alignment
 
 Another good news is that you can actullay use ncbi-blast tool in the command line (terrific!).
@@ -60,8 +61,9 @@ I used [homebrew](https://formulae.brew.sh/formula/blast) to downlaod the Blast+
 
 blastn -query /Your/Path/To/The/File/HS_ACTB.txt -subject /Your/Path/To/The/File/MS_ACTB.txt -out /Your/Path/To/The/File/test_blastn.txt
 
-# The output format is not a single score. You need to think about how to extract the relevant information in a single file (I skip this since we have an alternative below).
+# The output format is not a single score. You need to think about how to extract the relevant information in a single file.
 ```
+> For the automation of the code below, you need to modify the FASTA output file names separately and accordingly as a preliminary step that I skipped here. You can change the output file formats of eutils retrieval above. I skipped these since we have a better alternative below.
 ```bash
 # You can loop through all the matching gene name FASTA files separately
 dir="/Your/path/to/File"
