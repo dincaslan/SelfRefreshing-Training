@@ -2,6 +2,7 @@ If you ever used [NCBI-BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi), you mig
 
 ### Using Command Line
 The first way is using command lines: wget, eutils and blast+. 
+Since most tools has whole FASTA and the coding sequence only FASTA (CDS), I simply substract the CDS from Full FASTA to have 5 prime non-coding sequences.
 
 ```bash
 # More info about eutils and efectch, https://www.ncbi.nlm.nih.gov/books/NBK179288/, https://github.com/NCBI-Hackathons/EDirectCookbook, https://www.ncbi.nlm.nih.gov/books/NBK25499/table/chapter4.T._valid_values_of__retmode_and/, https://www.ncbi.nlm.nih.gov/books/NBK25499/,
@@ -47,8 +48,7 @@ Here is a useful [BLAST+ tutorial](https://conmeehan.github.io/blast+tutorial.ht
 ### Using R
 I was also wondering whether there is a way to compare 5 prime UTR sequence similarity of all transcripts of ortholog* genes of mouse and human (you can expand to other species as well.)
 The alternative is using Ensembl-BiomaRt for the retrieval of the relevant non-coding/coding FASTA and compare them using stringdist package of R for the similarity.
-
-* If you are unsure about orthology, then plese feel free to use [Emsemb BiomaRt](https://www.ensembl.org/info/data/biomart/index.html) to check it out (it has both an online tool and bioconductor package to run in R).
+> If you are unsure about orthology, then plese feel free to use [Emsemb BiomaRt](https://www.ensembl.org/info/data/biomart/index.html) to check it out (it has both an online tool and bioconductor package to run in R).
 ```r
 # Downloading the relevant packages
 # if (!require("BiocManager", quietly = TRUE))
@@ -57,7 +57,7 @@ The alternative is using Ensembl-BiomaRt for the retrieval of the relevant non-c
 # BiocManager::install("biomaRt")
 library(biomaRt)
 
-### Thanks ChatGPT for reminding me BiomaRt! ###
+### Thanks ChatGPT for reminding me BiomaRt!, and here is nice biconductor tutorial if you are curious: https://bioconductor.org/packages/release/bioc/vignettes/biomaRt/inst/doc/accessing_ensembl.html ###
 # Connect to EnsemblDB and select dataset genes (human and mouse)
 hensembl <- useMart("ensembl", dataset = "hsapiens_gene_ensembl")
 mensembl <- useMart("ensembl", dataset = "mmusculus_gene_ensembl")
@@ -96,7 +96,6 @@ mtranscripts <-mtranscripts[ mtranscripts["5utr"]!="Sequence unavailable",]
 # write.csv(mtranscript_data, "mtranscript_accessions.csv", row.names = FALSE)
 ```
 
-
 ```r
 # Approximate string matching, the similarity between two strings (the paper: https://cran.r-project.org/web/packages/stringdist/vignettes/RJournal_6_111-122-2014.pdf)
 # Initialize a data frame to keep the results
@@ -111,5 +110,6 @@ for (x in htranscripts$ensembl_transcript_id) {
 }
 
 # It would be more meaningful if there is a treshold for the distance measurements based on the mismatches
-results # final results
+results # final results will give you some number corresponding to each matching transcript. The lower the merries in terms of distance. 
 ```
+Here I attached the [Quarto doc]() of how it looks like. 
