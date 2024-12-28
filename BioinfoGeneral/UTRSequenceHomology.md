@@ -102,7 +102,7 @@ mtranscripts <-mtranscripts[ mtranscripts["5utr"]!="Sequence unavailable",]
 # Initialize a data frame to keep the results
 results <- data.frame(Human = character(), Mouse = character(), Distance = numeric(), stringsAsFactors = FALSE)
 
-# Loop over each element in gene of interest of two selected species to calculate distance, and save it
+# Loop over each gene of interests of two selected species to calculate distance
 for (x in htranscripts$ensembl_transcript_id) {
   for (y in mtranscripts$ensembl_transcript_id) {
     dist <- stringdist::stringdist(x, y, method = "lv") # "lv" for Levenshtein distance: "counting the weighted number of insertions, deletions and substitutions necessary to turn one string into another"
