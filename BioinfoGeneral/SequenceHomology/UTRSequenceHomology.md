@@ -47,7 +47,7 @@ echo "$CompleteFASTA" | grep ">" | while read -r header; do
 done
 
 ```
-### NCBI Alignment
+### Blast Alignment
 
 Another good news is that you can actullay use ncbi-blast tool in the command line (terrific!).
 I used [homebrew](https://formulae.brew.sh/formula/blast) to downlaod the Blast+.
